@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         Scanner scanner = new Scanner(System.in);
 
         Product[] product = {new Product("Молоко", 50),
@@ -12,11 +12,11 @@ public class Main {
                 new Product("Каша гречневая", 80)};
 
         Basket cart = new Basket(product);
-        File file = new File("basket.txt");
+        File file = new File("basket.bin");
 
         if (file.isFile()) {
             System.out.println("Найдена ваша корзина покупок: ");
-            cart.loadFromTxtFile();
+            Basket.loadFromBinFile();
             System.out.println();
         } else System.out.println("Ваша корзина пуста начните покупки: ");
 
@@ -43,10 +43,10 @@ public class Main {
             int productCount = Integer.parseInt(s[1]);
             cart.addToCart(productNumber, productCount);
 
-            cart.saveTxt(file);
+            cart.saveBin(file);
         }
 
         cart.printCart();
-        cart.saveTxt(file);
+        cart.saveBin(file);
     }
 }
