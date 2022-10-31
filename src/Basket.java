@@ -51,10 +51,10 @@ public class Basket implements Serializable {
     }
 
     static void loadFromBinFile() throws IOException, ClassNotFoundException {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream("basket.bin"));
-            Product ch = (Product)in.readObject();
-            System.out.print(ch);
-            in.close();
+        ObjectInputStream in = new ObjectInputStream(new FileInputStream("basket.bin"));
+        File ch = (File) in.readObject();
+        System.out.print(ch);
+        in.close();
     }
 }
 
