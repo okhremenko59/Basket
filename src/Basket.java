@@ -29,13 +29,13 @@ public class Basket {
     // метод вывода на экран покупательской корзины.
     public void printCart() {
         System.out.println("Ваша корзина: ");
-        for (int i = 0; i < cart.length; i++) {
-            if (cart[i] == null) {
+        for (Product value : cart) {
+            if (value == null) {
                 break;
-            } else if (cart[i].total > 0) {
-                System.out.println(cart[i].productName + " " + cart[i].total / cart[i].price + " шт. " +
-                        "В сумме: " + cart[i].total + " руб.");
-                sumBasket += cart[i].total;
+            } else if (value.total > 0) {
+                System.out.println(value.productName + " " + value.total / value.price + " шт. " +
+                        "В сумме: " + value.total + " руб.");
+                sumBasket += value.total;
             }
         }
         System.out.println("Итого: " + sumBasket + " руб.");
@@ -43,25 +43,26 @@ public class Basket {
 
     public void saveTxt(File textFile) throws IOException {
         try (FileWriter out = new FileWriter(textFile.getName())) {
-            for (int i = 0; i < cart.length; i++)
-                if (cart[i] == null) {
+            for (Product value : cart)
+                if (value == null) {
                     break;
                 } else
-                    out.write(cart[i].productName + " " + cart[i].total / cart[i].price + " шт. " +
-                            "В сумме: " + cart[i].total + " руб.");
+                    out.write(value.productName + " " + value.total / value.price + " шт. " +
+                            "Итого: " + value.total + " руб.");
         }
 
     }
 
     // статический(!) метод восстановления объекта корзины из текстового файла, в который ранее была она сохранена;
-    static void loadFromTxtFile() throws IOException {
-        FileReader in = new FileReader("basket.txt");
+    static void loadFromTxtFile(File textFile) throws IOException {
+        try (FileReader in = new FileReader("basket.txt")) {
         while (in.ready()) {
             char read = (char) in.read();
             System.out.print(read);
         }
         in.close();
     }
+}
 }
 
 

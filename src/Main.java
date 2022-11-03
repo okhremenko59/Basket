@@ -16,7 +16,7 @@ public class Main {
 
         if (file.isFile()) {
             System.out.println("Найдена ваша корзина покупок: ");
-            cart.loadFromTxtFile();
+            Basket.loadFromTxtFile(file);
             System.out.println();
         } else System.out.println("Ваша корзина пуста начните покупки: ");
 
