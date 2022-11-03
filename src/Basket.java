@@ -41,21 +41,24 @@ public class Basket implements Serializable {
         System.out.println("Итого: " + sumBasket + " руб.");
     }
 
-    public void saveBin(File textFile) throws IOException {
-        ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(textFile));
-        for (Product value : cart)
-            if (value == null) {
-                break;
-            } else
-                out.writeObject(textFile);
+    public void saveBin(File file) throws IOException {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("basket.bin"))) {
+            for (int i = 0; i < cart.length; i++) {
+                Product value = cart[i];
+                if (value == null) {
+                    break;
+                } else
+                    out.writeObject(file);
+            }
+        }
     }
 
-    static void loadFromBinFile() throws IOException, ClassNotFoundException {
-        ObjectInputStream in = new ObjectInputStream(new FileInputStream("basket.bin"));
-        File ch = (File) in.readObject();
-        System.out.print(ch);
-        in.close();
+    static void loadFromBinFile(File file) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("basket.bin"))) {
+            File InFile = (File) in.readObject();
+            in.close();
+            System.out.println(InFile);
+        }
     }
 }
-
 
