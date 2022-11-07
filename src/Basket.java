@@ -1,9 +1,11 @@
+import java.awt.*;
 import java.io.*;
+import java.util.Arrays;
 
 public class Basket implements Serializable {
     private Product[] product;
     private Product[] cart;
-    int sumBasket = 0;
+    int sumBasket;
 
     public void printBasket() {
         System.out.println("Список доступных продуктов к покупке: ");
@@ -43,22 +45,25 @@ public class Basket implements Serializable {
 
     public void saveBin(File file) throws IOException {
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("basket.bin"))) {
-            for (int i = 0; i < cart.length; i++) {
-                Product value = cart[i];
-                if (value == null) {
-                    break;
-                } else
-                    out.writeObject(file);
+            Basket bas = new Basket(cart);
+            out.writeObject(bas);
             }
         }
-    }
 
     static void loadFromBinFile(File file) throws IOException, ClassNotFoundException {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("basket.bin"))) {
-            File InFile = (File) in.readObject();
-            in.close();
-            System.out.println(InFile);
+           Basket basket = (Basket) in.readObject();
+           System.out.println(basket);
         }
     }
+
+    @Override
+    public String toString() {
+        return "Basket{" +
+                "cart=" + Arrays.toString(product) + sumBasket +
+                '}';
+    }
+
+
 }
 
