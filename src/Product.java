@@ -1,4 +1,6 @@
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     public String productName;
     public int price;
     public int total;
@@ -10,17 +12,5 @@ public class Product {
 
     public String toString() {
         return productName + " " + price + " руб/шт";
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public int getTotal() {
-        return total;
     }
 }

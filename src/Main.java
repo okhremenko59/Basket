@@ -11,8 +11,9 @@ public class Main {
                 new Product("Хлеб", 14),
                 new Product("Каша гречневая", 80)};
 
-        Basket cart = new Basket(product);
+        Basket basket = new Basket(product);
         File file = new File("basket.bin");
+
 
         if (file.isFile()) {
             System.out.println("Найдена ваша корзина покупок: ");
@@ -30,7 +31,7 @@ public class Main {
         }
 
         while (true) {
-            cart.printBasket();
+            basket.printBasket();
 
             System.out.println("Выберите товар и количество или введите 'end' ");
             String input = scanner.nextLine();
@@ -41,12 +42,11 @@ public class Main {
             String[] s = input.split(" ");
             int productNumber = Integer.parseInt(s[0]) - 1;
             int productCount = Integer.parseInt(s[1]);
-            cart.addToCart(productNumber, productCount);
+            basket.addToCart(productNumber, productCount);
 
-            cart.saveBin(file);
+            basket.saveBin(file);
         }
 
-        cart.printCart();
-        cart.saveBin(file);
+        basket.printCart();
     }
 }
