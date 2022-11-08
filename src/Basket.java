@@ -48,16 +48,15 @@ public class Basket implements Serializable {
                 if (value == null) {
                     break;
                 } else
-                    out.writeObject(file);
+                    out.writeObject(cart);
             }
         }
     }
 
-    static void loadFromBinFile(File file) throws IOException, ClassNotFoundException {
+    static void loadFromBinFile() throws IOException, ClassNotFoundException {
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("basket.bin"))) {
-            File InFile = (File) in.readObject();
-            in.close();
-            System.out.println(InFile);
+            Basket cart = (Basket) in.readObject();
+            System.out.println(cart);
         }
     }
 }
