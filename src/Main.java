@@ -47,6 +47,7 @@ public class Main {
             basket.saveBin(file);
         }
 
+        basket.loadFromBinFile();
         basket.printCart();
     }
 }

@@ -1,11 +1,10 @@
-import java.awt.*;
 import java.io.*;
-import java.util.Arrays;
 
 public class Basket implements Serializable {
-    private Product[] product;
-    private Product[] cart;
+    public Product[] product;
+    public Product[] cart;
     int sumBasket;
+    public String productName;
 
     public void printBasket() {
         System.out.println("Список доступных продуктов к покупке: ");
@@ -25,7 +24,6 @@ public class Basket implements Serializable {
     public void addToCart(int productNumber, int amount) {
         cart[productNumber] = product[productNumber];
         cart[productNumber].total += product[productNumber].price * amount;
-
     }
 
     // метод вывода на экран покупательской корзины.
@@ -56,14 +54,5 @@ public class Basket implements Serializable {
            System.out.println(basket);
         }
     }
-
-    @Override
-    public String toString() {
-        return "Basket{" +
-                "cart=" + Arrays.toString(product) + sumBasket +
-                '}';
-    }
-
-
 }
 

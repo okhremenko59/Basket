@@ -11,6 +11,7 @@ public class Product implements Serializable {
     }
 
     public String toString() {
+
         return productName + " " + price + " руб/шт";
     }
 }
