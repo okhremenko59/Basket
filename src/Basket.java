@@ -1,12 +1,19 @@
 import java.io.*;
+import java.util.Arrays;
 
 public class Basket implements Serializable {
-    public Product[] product;
-    public Product[] cart;
-    int sumBasket;
-    public String productName;
+    protected Product[] product;
+    protected String [] productName;
+    protected int [] prices;
+    protected int [] count;
 
-    public void printBasket() {
+    public Basket(String[] productName, int[] prices, int[] count) {
+        this.productName = productName;
+        this.prices = prices;
+        this.count = new int[prices.length];
+    }
+
+    public void printProduct() {
         System.out.println("Список доступных продуктов к покупке: ");
         for (int i = 0; i < product.length; i++) {
             int cnt = i + 1;
@@ -14,45 +21,49 @@ public class Basket implements Serializable {
         }
     }
 
-    //конструктор, принимающий массив цен и названий продуктов;
     public Basket(Product[] product) {
         this.product = product;
-        cart = new Product[product.length];
+        count = new int[prices.length];
     }
 
-    //метод добавления amount штук продукта и номер productNum в корзину;
+    public Basket(String[] productName, int[] prices) {
+        this.productName = productName;
+        this.prices = prices;
+    }
+
     public void addToCart(int productNumber, int amount) {
-        cart[productNumber] = product[productNumber];
-        cart[productNumber].total += product[productNumber].price * amount;
+        count[productNumber] += amount;
     }
 
-    // метод вывода на экран покупательской корзины.
     public void printCart() {
         System.out.println("Ваша корзина: ");
-        for (Product value : cart) {
-            if (value == null) {
-                break;
-            } else if (value.total > 0) {
-                System.out.println(value.productName + " " + value.total / value.price + " шт. " +
-                        "В сумме: " + value.total + " руб.");
-                sumBasket += value.total;
-            }
+        for (int i=0; i< productName.length; i++) {
+            System.out.println(productName[i] + " " + count[i] + " шт. " +
+                    "В сумме: " + (count[i]*prices[i]) + " руб.");
         }
-        System.out.println("Итого: " + sumBasket + " руб.");
     }
 
     public void saveBin(File file) throws IOException {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("basket.bin"))) {
-            Basket bas = new Basket(cart);
-            out.writeObject(bas);
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
+            out.writeObject(this);
             }
         }
 
-    static void loadFromBinFile() throws IOException, ClassNotFoundException {
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream("basket.bin"))) {
+    public static Basket loadFromBinFile(File file) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
            Basket basket = (Basket) in.readObject();
-           System.out.println(basket);
+            System.out.println(basket);
+           return basket;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Basket{" +
+                "productName=" + Arrays.toString(productName) +
+                ", prices=" + Arrays.toString(prices) +
+                ", count=" + Arrays.toString(count) +
+                '}';
     }
 }
 
