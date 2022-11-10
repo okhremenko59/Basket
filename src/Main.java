@@ -8,23 +8,15 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
 
         String[] productName = {"Молоко", "Хлеб", "Каша гречневая"};
-        int[] prices = {50,14,80};
-
-        Product[] product = {new Product("Молоко", 50),
-                new Product("Хлеб", 14),
-                new Product("Каша гречневая", 80),
-        };
+        int[] prices = {50, 14, 80};
 
         Basket basket = new Basket(productName, prices);
-        Basket bas = new Basket(product);
         File file = new File("basket.bin");
 
-        if (file.isFile()&&file.length() != 0) {
-            System.out.println("Найдена ваша корзина покупок: ");
+        if (file.isFile() && file.length() != 0) {
             Basket.loadFromBinFile(file);
             System.out.println();
         } else System.out.println("Ваша корзина пуста начните покупки: ");
-
         try {
             if (file.createNewFile()) {
                 System.out.println();
@@ -35,8 +27,7 @@ public class Main {
         }
 
         while (true) {
-            bas.printProduct();
-
+            basket.printProduct();
             System.out.println("Выберите товар и количество или введите 'end' ");
             String input = scanner.nextLine();
             if (input.equals("end")) {
@@ -47,11 +38,10 @@ public class Main {
             int productNumber = Integer.parseInt(s[0]) - 1;
             int amount = Integer.parseInt(s[1]);
             basket.addToCart(productNumber, amount);
-
-            basket.saveBin(file);
         }
 
-        basket.loadFromBinFile(file);
-        basket.printCart();
+        basket.saveBin(file);
+        //     basket.loadFromBinFile(file);
+        basket.printBasket();
     }
 }
