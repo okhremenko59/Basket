@@ -49,17 +49,5 @@ public class Basket implements Serializable {
             return basket;
         }
     }
-
-//    @Override
-//    public String toString() {
-//
-//            for (int i = 0; i < productName.length; i++)
-//                if (count[i] != 0) {
-//                    return
-//                                    Arrays.toString(productName) + "\n" +
-//                                    Arrays.toString(prices) + "\n" +
-//                                    Arrays.toString(count) + "\n";
-//                }
-//        }
 }
 
