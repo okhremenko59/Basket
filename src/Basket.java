@@ -23,7 +23,6 @@ public class Basket {
     public void addToCart(int productNumber, int amount) {
         cart[productNumber] = product[productNumber];
         cart[productNumber].total += product[productNumber].price * amount;
-
     }
 
     // метод вывода на экран покупательской корзины.
@@ -50,17 +49,16 @@ public class Basket {
                     out.write(value.productName + " " + value.total / value.price + " шт. " +
                             "Итого: " + value.total + " руб.");
         }
-
     }
 
     // статический(!) метод восстановления объекта корзины из текстового файла, в который ранее была она сохранена;
-    static void loadFromTxtFile(File textFile) throws IOException {
+    static Basket loadFromTxtFile(File textFile) throws IOException {
         try (FileReader in = new FileReader("basket.txt")) {
         while (in.ready()) {
             char read = (char) in.read();
             System.out.print(read);
+            return;
         }
-        in.close();
     }
 }
 }
