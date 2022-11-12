@@ -4,22 +4,20 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         Scanner scanner = new Scanner(System.in);
 
-        Product[] product = {new Product("Молоко", 50),
-                new Product("Хлеб", 14),
-                new Product("Каша гречневая", 80)};
+        String[] productName = {"Молоко", "Хлеб", "Каша-гречневая"};
+        int[] prices = {50, 14, 80};
 
-        Basket cart = new Basket(product);
+        Basket basket = new Basket(productName, prices);
         File file = new File("basket.txt");
 
-        if (file.isFile()) {
-            System.out.println("Найдена ваша корзина покупок: ");
-            Basket.loadFromTxtFile(file);
+        if (file.isFile() && file.length() != 0) {
+            Basket cart = Basket.loadFromTxtFile(file);
+            cart.printBasket();
             System.out.println();
         } else System.out.println("Ваша корзина пуста начните покупки: ");
-
         try {
             if (file.createNewFile()) {
                 System.out.println();
@@ -30,8 +28,7 @@ public class Main {
         }
 
         while (true) {
-            cart.printBasket();
-
+            basket.printProduct();
             System.out.println("Выберите товар и количество или введите 'end' ");
             String input = scanner.nextLine();
             if (input.equals("end")) {
@@ -40,13 +37,11 @@ public class Main {
 
             String[] s = input.split(" ");
             int productNumber = Integer.parseInt(s[0]) - 1;
-            int productCount = Integer.parseInt(s[1]);
-            cart.addToCart(productNumber, productCount);
-
-            cart.saveTxt(file);
+            int count = Integer.parseInt(s[1]);
+            basket.addToCart(productNumber, count);
         }
 
-        cart.printCart();
-        cart.saveTxt(file);
+        basket.saveTxt(file);
+        basket.printBasket();
     }
 }
